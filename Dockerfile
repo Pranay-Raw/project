@@ -1,29 +1,27 @@
-# Use CentOS Stream as CentOS 8 is EOL
-FROM centos:stream8
+# Use lightweight Ubuntu as base image
+FROM ubuntu:latest
 
-# Maintainer information
+# Set the maintainer information
 LABEL maintainer="pranayrawarkar@gmail.com"
 
-# Set up repositories, install required packages in one RUN to minimize layers
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
-    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
-    yum install -y java httpd zip unzip && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+# Update package list and install required packages
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    unzip \
+    wget && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set the working directory to Apache's root
 WORKDIR /var/www/html/
 
-# Copy the website template zip file to the container
-COPY photogenic.zip /var/www/html/
-
-# Extract the contents of the zip file
-RUN unzip -q photogenic.zip && \
+# Download and extract the website template automatically
+RUN wget -O website.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip && \
+    unzip -q website.zip && \
     mv photogenic/* . && \
-    rm -rf photogenic photogenic.zip
+    rm -rf photogenic website.zip
 
-# Expose HTTP port
-EXPOSE 80
+# Expose port 80 for HTTP traffic
+EXPOSE 80 8080
 
 # Start Apache in the foreground
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+CMD ["apachectl", "-D", "FOREGROUND"]
