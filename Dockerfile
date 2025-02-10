@@ -1,11 +1,20 @@
-FROM alpine:latest
+# Use the official Node.js image from Docker Hub
+FROM node:14
 
-RUN apk add --no-cache apache2 unzip wget && \
-    wget -O /var/www/localhost/htdocs/website.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip && \
-    unzip -q /var/www/localhost/htdocs/website.zip -d /var/www/localhost/htdocs/ && \
-    mv /var/www/localhost/htdocs/photogenic/* /var/www/localhost/htdocs/ && \
-    rm -rf /var/www/localhost/htdocs/photogenic /var/www/localhost/htdocs/website.zip
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-EXPOSE 80
+# Copy package.json and package-lock.json for dependency installation
+COPY package*.json ./
 
-CMD ["httpd", "-D", "FOREGROUND"]
+# Install application dependencies
+RUN npm install
+
+# Copy the rest of the application code into the container
+COPY . .
+
+# Expose port 3000 (or the port your app listens to)
+EXPOSE 3000
+
+# Run the Node.js application
+CMD ["npm", "start"]
