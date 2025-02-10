@@ -14,8 +14,10 @@ RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
 # Set working directory
 WORKDIR /var/www/html/
 
-# Copy and extract the website template
-COPY photogenic.zip .
+# Copy the website template zip file to the container
+COPY photogenic.zip /var/www/html/
+
+# Extract the contents of the zip file
 RUN unzip -q photogenic.zip && \
     mv photogenic/* . && \
     rm -rf photogenic photogenic.zip
