@@ -8,7 +8,7 @@ CMD /bin/bash
 RUN yum install -y httpd
 RUN yum install -y zip
 RUN yum install -y unzip
-RUN wget -O /var/www/html/photogenic.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip || echo "Download failed, please check the URL."
+COPY photogenic.zip /var/www/html/
 WORKDIR /var/www/html/
 RUN sh -c 'unzip -q "*.zip"'
 RUN cp -rvf photogenic/* .
