@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: my-app
-    spec:k
+    spec: 
       containers:
         - name: my-app-container
           image: rawakarpranay/k8sprojects:latest  # Replace with your Docker image
