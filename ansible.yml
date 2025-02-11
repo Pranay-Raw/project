@@ -1,6 +1,6 @@
 ---
 - name: Deploy Application on Kubernetes
-  hosts: all  # Replace with your target host group
+  hosts: 13.232.210.146  # Replace with your target host group
   become: yes  # Run as root
   tasks:
 
@@ -13,8 +13,8 @@
     - name: Apply Kubernetes Deployment
       command: kubectl apply -f /home/admin/deployment.yml
       register: kubectl_output
-     -  name: create new service
-        command: kubectl apply -f /home/admin/Service.yml
+    - name: create new service
+      command: kubectl apply -f /home/admin/Service.yml
 
     - name: Show Deployment Output
       debug:
