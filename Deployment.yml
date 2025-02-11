@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+spec:
+  replicas: 2  # Number of pod instances
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:k
+      containers:
+        - name: my-app-container
+          image: rawakarpranay/k8sprojects:latest  # Replace with your Docker image
+          ports:
+            - containerPort: 80  # Change if your app runs on a different port
+          env:
+            - name: ENVIRONMENT
+              value: "production"
+
