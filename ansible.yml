@@ -13,8 +13,8 @@
     - name: Apply Kubernetes Deployment
       command: kubectl apply -f /home/admin/deployment.yml
       register: kubectl_output
-   -  name: create new service
-      command: kubectl apply -f /home/admin/Service.yml
+     -  name: create new service
+        command: kubectl apply -f /home/admin/Service.yml
 
     - name: Show Deployment Output
       debug:
