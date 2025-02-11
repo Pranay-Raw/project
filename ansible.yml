@@ -6,8 +6,8 @@
 
     - name: Copy Kubernetes Deployment YAML to Master Node
       copy:
-        src: ./deployment.yml  # Ensure this file is in the same directory as playbook
-        dest: /home/admin/deployment.yml
+        src: ./Deployment.yml  # Ensure this file is in the same directory as playbook
+        dest: /home/admin/Deployment.yml
         mode: '0644'
 
     - name: Apply Kubernetes Deployment
